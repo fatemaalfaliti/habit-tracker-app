@@ -102,6 +102,19 @@ As a **user**, I want **clear navigation icons on the Home screen** so that **I 
 
 **Story Points:** 1
 
+### User Story 2.5: Add a New Habit
+**Title:** Add my own habit
+
+As a **user**, I want to **add a new habit from the Home screen** so that **I can track the habits that matter to me**.
+
+**Acceptance Criteria:**
+1. An "+ Add Habit" button is shown on the Home screen.
+2. The user can enter the habit name, choose a category, and set a duration.
+3. The new habit appears immediately in the "My Habits" list and is saved locally.
+4. The user can delete a habit they no longer want to track.
+
+**Story Points:** 3
+
 ---
 
 ## 3. Detail Screen
@@ -241,8 +254,10 @@ As a **user**, I want to **access the settings menu from the Home screen** so th
 As a **user**, I want to **see the settings grouped into clear sections** so that **I can quickly find the option I need**.
 
 **Acceptance Criteria:**
-1. Settings are grouped into sections: Account, Appearance, Notifications, and My Favorites.
-2. Each section has a clear title and icon.
+1. The Menu screen shows a greeting "Hello, [username]!" and the message "Would you like to change any settings?"
+2. The menu shows option cards with icons: Settings, My Favorites, Daily Reminders, and Reports.
+3. Tapping a card opens the related screen.
+4. A "Logout" button is shown at the bottom of the menu.
 
 **Story Points:** 2
 
@@ -272,7 +287,19 @@ As a **user**, I want to **turn notifications on or off** so that **I only recei
 
 **Story Points:** 2
 
-### User Story 7.3: Logout
+### User Story 7.3: Edit Profile
+**Title:** Update my account details
+
+As a **user**, I want to **view and edit my name and email in the Settings screen** so that **my account information stays up to date**.
+
+**Acceptance Criteria:**
+1. The Account section shows the user's current username and email.
+2. An "Edit" button lets the user change the username and email.
+3. Tapping "Save" updates the details in local storage and shows a confirmation message.
+
+**Story Points:** 2
+
+### User Story 7.4: Logout
 **Title:** Log out securely
 
 As a **user**, I want a **clear and visible logout button** so that **I can securely log out when I'm done**.
@@ -318,5 +345,32 @@ As a **user**, I want to **see a list of all my reminders** so that **I can mana
 **Acceptance Criteria:**
 1. All reminders are listed with their date and time.
 2. A red "Delete" button next to each reminder removes it.
+
+**Story Points:** 2
+
+---
+
+## 9. Reports
+
+### User Story 9.1: Weekly Progress Report
+**Title:** View my weekly progress
+
+As a **user**, I want to **see a summary of my progress for the current week** so that **I can understand how consistent I am with my habits**.
+
+**Acceptance Criteria:**
+1. The Reports screen is opened from the "Reports" card in the Menu.
+2. A bar chart shows the number of habits completed on each day of the week.
+3. Summary cards show the number of completed habits, pending habits for today, and the best streak.
+
+**Story Points:** 3
+
+### User Story 9.2: Completed vs Pending Habits
+**Title:** See which habits are done and which are pending
+
+As a **user**, I want to **see lists of completed and pending habits for today** so that **I know what is left to do**.
+
+**Acceptance Criteria:**
+1. The Reports screen shows two lists: "Completed" and "Pending".
+2. Each item shows the habit name and category.
 
 **Story Points:** 2
