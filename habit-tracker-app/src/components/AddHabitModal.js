@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "./Icon";
 import { globalStyles, COLORS, FONTS } from "../constants/theme";
 import { CATEGORIES } from "../constants/habits";
 import { showAlert } from "../utils/showAlert";
@@ -62,7 +62,7 @@ export default function AddHabitModal({ visible, onClose, onAdd }) {
           <View style={styles.headerRow}>
             <Text style={styles.heading}>New Habit</Text>
             <TouchableOpacity onPress={resetAndClose} accessibilityLabel="Close">
-              <Ionicons name="close" size={24} color={COLORS.text} />
+              <Icon name="close" size={24} color={COLORS.text} />
             </TouchableOpacity>
           </View>
 

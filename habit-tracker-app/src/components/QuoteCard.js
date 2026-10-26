@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "./Icon";
 import { COLORS, FONTS } from "../constants/theme";
 
 // ------------------------------------------------------------
@@ -17,7 +17,7 @@ export default function QuoteCard() {
   return (
     <View style={styles.card}>
       <View style={styles.titleRow}>
-        <Ionicons name="sparkles-outline" size={14} color={COLORS.primaryDark} />
+        <Icon name="sparkles-outline" size={14} color={COLORS.primaryDark} />
         <Text style={styles.label}>QUOTE OF THE DAY</Text>
       </View>
       <Text style={styles.quote}>"{QUOTE.text}"</Text>

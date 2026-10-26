@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "./Icon";
 import { COLORS, FONTS } from "../constants/theme";
 
 // ------------------------------------------------------------
@@ -26,7 +26,7 @@ export default function Header({ onSettingsPress }) {
         onPress={onSettingsPress}
         accessibilityLabel="Open settings menu"
       >
-        <Ionicons name="settings-outline" size={22} color={COLORS.text} />
+        <Icon name="settings-outline" size={22} color={COLORS.text} />
       </TouchableOpacity>
     </View>
   );

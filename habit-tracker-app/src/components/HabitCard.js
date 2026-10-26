@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "./Icon";
 import { COLORS, FONTS } from "../constants/theme";
 import { CATEGORIES } from "../constants/habits";
 
@@ -22,7 +22,7 @@ export default function HabitCard({ habit, done, onPress, onToggle, onLongPress 
     >
       {/* Thumbnail: coloured square with the habit icon */}
       <View style={[styles.thumb, { backgroundColor: category.bg }]}>
-        <Ionicons name={habit.icon || category.icon} size={26} color={category.fg} />
+        <Icon name={habit.icon || category.icon} size={26} color={category.fg} />
       </View>
 
       {/* Title, category tag and duration */}
@@ -42,7 +42,7 @@ export default function HabitCard({ habit, done, onPress, onToggle, onLongPress 
         onPress={onToggle}
         accessibilityLabel={done ? "Mark as not done" : "Mark as done"}
       >
-        {done && <Ionicons name="checkmark" size={18} color={COLORS.white} />}
+        {done && <Icon name="checkmark" size={18} color={COLORS.white} />}
       </TouchableOpacity>
     </TouchableOpacity>
   );

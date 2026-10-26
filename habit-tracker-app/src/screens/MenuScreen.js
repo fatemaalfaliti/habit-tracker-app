@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "../components/Icon";
 import { globalStyles, COLORS, FONTS } from "../constants/theme";
 import { getCurrentUser } from "../utils/habitStorage";
 
@@ -34,7 +34,7 @@ export default function MenuScreen({ navigation }) {
         onPress={() => navigation.goBack()}
         accessibilityLabel="Go back"
       >
-        <Ionicons name="arrow-back" size={22} color={COLORS.text} />
+        <Icon name="arrow-back" size={22} color={COLORS.text} />
       </TouchableOpacity>
 
       <Text style={globalStyles.title}>Hello, {userName}!</Text>
@@ -42,7 +42,7 @@ export default function MenuScreen({ navigation }) {
 
       {/* Logout button */}
       <TouchableOpacity style={styles.logout} onPress={handleLogout}>
-        <Ionicons name="log-out-outline" size={20} color={COLORS.error} />
+        <Icon name="log-out-outline" size={20} color={COLORS.error} />
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
     </View>

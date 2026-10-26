@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "../components/Icon";
 import { COLORS, FONTS } from "../constants/theme";
 import { CATEGORIES } from "../constants/habits";
 import { showAlert } from "../utils/showAlert";
@@ -107,7 +107,7 @@ export default function DetailScreen({ route, navigation }) {
           onPress={() => navigation.goBack()}
           accessibilityLabel="Go back"
         >
-          <Ionicons name="arrow-back" size={22} color={COLORS.text} />
+          <Icon name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
         <Text style={styles.topTitle}>Habit Details</Text>
         <TouchableOpacity
@@ -115,13 +115,13 @@ export default function DetailScreen({ route, navigation }) {
           onPress={handleShare}
           accessibilityLabel="Share habit"
         >
-          <Ionicons name="share-social-outline" size={22} color={COLORS.text} />
+          <Icon name="share-social-outline" size={22} color={COLORS.text} />
         </TouchableOpacity>
       </View>
 
       {/* Banner with the habit icon */}
       <View style={[styles.banner, { backgroundColor: category.bg }]}>
-        <Ionicons name={habit.icon || category.icon} size={72} color={category.fg} />
+        <Icon name={habit.icon || category.icon} size={72} color={category.fg} />
       </View>
 
       {/* Title, category, duration and streak */}
@@ -133,7 +133,7 @@ export default function DetailScreen({ route, navigation }) {
         <Text style={styles.duration}>{habit.duration} · Daily</Text>
       </View>
       <View style={styles.streakRow}>
-        <Ionicons name="flame" size={18} color="#C2410C" />
+        <Icon name="flame" size={18} color="#C2410C" />
         <Text style={styles.streakText}>
           Streak: {streak} {streak === 1 ? "day" : "days"}
         </Text>
@@ -176,12 +176,12 @@ export default function DetailScreen({ route, navigation }) {
         style={[styles.primaryButton, done && styles.primaryButtonDone]}
         onPress={handleToggleDone}
       >
-        <Ionicons name="checkmark" size={20} color={COLORS.white} />
+        <Icon name="checkmark" size={20} color={COLORS.white} />
         <Text style={styles.primaryButtonText}>{done ? "Completed" : "Mark as Done"}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.favoriteButton} onPress={handleToggleFavorite}>
-        <Ionicons
+        <Icon
           name={habit.favorite ? "heart" : "heart-outline"}
           size={20}
           color="#9A3412"

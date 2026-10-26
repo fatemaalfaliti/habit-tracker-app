@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "../components/Icon";
 import Header from "../components/Header";
 import Welcome from "../components/Welcome";
 import QuoteCard from "../components/QuoteCard";
@@ -163,7 +163,7 @@ export default function HomeScreen({ navigation }) {
         onPress={() => setShowAddModal(true)}
         accessibilityLabel="Add a new habit"
       >
-        <Ionicons name="add" size={30} color={COLORS.white} />
+        <Icon name="add" size={30} color={COLORS.white} />
       </TouchableOpacity>
 
       {/* "New Habit" pop-up form */}
