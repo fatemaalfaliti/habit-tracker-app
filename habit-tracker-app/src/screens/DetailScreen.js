@@ -21,8 +21,12 @@ import {
   toggleDoneToday,
   getStreak,
 } from "../utils/habitStorage";
+import { useTheme } from "../context/ThemeProvider";
 
 export default function DetailScreen({ route, navigation }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS } = useTheme();
+  const styles = makeStyles(COLORS);
   // The id of the habit selected on the Home screen
   const { habitId } = route.params;
 
@@ -194,7 +198,9 @@ export default function DetailScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -285,7 +291,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   tabActive: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
   },
   tabText: {
     fontSize: 14,
@@ -307,7 +313,7 @@ const styles = StyleSheet.create({
   body: {
     fontSize: 14,
     lineHeight: 22,
-    color: "#4B5563",
+    color: COLORS.textSecondary,
     marginBottom: 4,
   },
   primaryButton: {

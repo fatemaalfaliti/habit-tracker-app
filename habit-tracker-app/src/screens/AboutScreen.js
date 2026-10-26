@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "../components/Icon";
 import { COLORS, FONTS } from "../constants/theme";
+import { useTheme } from "../context/ThemeProvider";
 
 // ------------------------------------------------------------
 // About screen: information about the app and its features.
@@ -15,6 +16,9 @@ const FEATURES = [
 ];
 
 export default function AboutScreen({ navigation }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS } = useTheme();
+  const styles = makeStyles(COLORS);
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
       {/* Top bar */}
@@ -64,7 +68,9 @@ export default function AboutScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -125,7 +131,7 @@ const styles = StyleSheet.create({
   body: {
     fontSize: 14,
     lineHeight: 22,
-    color: "#4B5563",
+    color: COLORS.textSecondary,
   },
   feature: {
     fontSize: 14,

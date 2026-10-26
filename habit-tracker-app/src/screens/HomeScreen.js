@@ -24,8 +24,12 @@ import {
   isDoneToday,
   toggleDoneToday,
 } from "../utils/habitStorage";
+import { useTheme } from "../context/ThemeProvider";
 
 export default function HomeScreen({ navigation }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS } = useTheme();
+  const styles = makeStyles(COLORS);
   // ---------------- State ----------------
   const [user, setUser] = useState(null); // logged-in user
   const [habits, setHabits] = useState([]); // the user's habits
@@ -176,7 +180,9 @@ export default function HomeScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: COLORS.background,

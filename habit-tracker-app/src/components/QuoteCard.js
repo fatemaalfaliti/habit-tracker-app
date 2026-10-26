@@ -9,6 +9,7 @@ import {
 import Icon from "./Icon";
 import { COLORS, FONTS } from "../constants/theme";
 import { fetchRandomQuote, getFallbackQuote } from "../api/quotesApi";
+import { useTheme } from "../context/ThemeProvider";
 
 // ------------------------------------------------------------
 // Quote of the Day card.
@@ -18,6 +19,9 @@ import { fetchRandomQuote, getFallbackQuote } from "../api/quotesApi";
 // with a short message if the API cannot be reached.
 // ------------------------------------------------------------
 export default function QuoteCard() {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS } = useTheme();
+  const styles = makeStyles(COLORS);
   // ---------------- State ----------------
   const [quote, setQuote] = useState(null); // { text, author }
   const [isLoading, setIsLoading] = useState(true); // waiting for the API
@@ -84,11 +88,13 @@ export default function QuoteCard() {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   card: {
     backgroundColor: COLORS.primarySoft,
     borderWidth: 1.5,
-    borderColor: "#99F6E4",
+    borderColor: COLORS.accentBorder,
     borderRadius: 16,
     padding: 16,
     marginBottom: 14,
@@ -114,7 +120,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
   },
   refreshText: {
     fontSize: 12,

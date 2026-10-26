@@ -17,6 +17,7 @@ import {
   isDoneToday,
   getBestStreak,
 } from "../utils/habitStorage";
+import { useTheme } from "../context/ThemeProvider";
 
 // ------------------------------------------------------------
 // Reports screen: weekly progress built from the saved habits.
@@ -29,6 +30,9 @@ const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const CHART_HEIGHT = 140;
 
 export default function ReportsScreen({ navigation }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS } = useTheme();
+  const styles = makeStyles(COLORS);
   const [habits, setHabits] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -162,7 +166,9 @@ export default function ReportsScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -212,7 +218,7 @@ const styles = StyleSheet.create({
   },
   chartCard: {
     borderWidth: 1.5,
-    borderColor: "#E5E7EB",
+    borderColor: COLORS.divider,
     borderRadius: 16,
     padding: 14,
     marginBottom: 14,
@@ -235,7 +241,7 @@ const styles = StyleSheet.create({
     height: CHART_HEIGHT,
     width: 24,
     justifyContent: "flex-end",
-    backgroundColor: "#F3F4F6",
+    backgroundColor: COLORS.surface,
     borderRadius: 6,
     overflow: "hidden",
   },
@@ -263,7 +269,7 @@ const styles = StyleSheet.create({
   statCard: {
     flex: 1,
     borderWidth: 1.5,
-    borderColor: "#E5E7EB",
+    borderColor: COLORS.divider,
     borderRadius: 14,
     padding: 10,
     marginHorizontal: 4,
@@ -284,7 +290,7 @@ const styles = StyleSheet.create({
   listCard: {
     flex: 1,
     borderWidth: 1.5,
-    borderColor: "#E5E7EB",
+    borderColor: COLORS.divider,
     borderRadius: 14,
     padding: 12,
     marginHorizontal: 4,

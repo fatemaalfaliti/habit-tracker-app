@@ -1,8 +1,12 @@
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
 import { COLORS, SIZES, FONTS } from "../constants/theme";
+import { useTheme } from "../context/ThemeProvider";
 
 export default function Logo({ showTagline = true }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS } = useTheme();
+  const styles = makeStyles(COLORS);
   return (
     <View style={styles.wrapper}>
       <Image
@@ -18,7 +22,9 @@ export default function Logo({ showTagline = true }) {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   wrapper: {
     alignItems: "center",
     marginBottom: 28,

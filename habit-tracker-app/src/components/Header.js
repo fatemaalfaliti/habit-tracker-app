@@ -2,12 +2,16 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "./Icon";
 import { COLORS, FONTS } from "../constants/theme";
+import { useTheme } from "../context/ThemeProvider";
 
 // ------------------------------------------------------------
 // Top navigation bar: app logo and name on the left,
 // settings icon on the right (opens the menu).
 // ------------------------------------------------------------
 export default function Header({ onSettingsPress }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS } = useTheme();
+  const styles = makeStyles(COLORS);
   return (
     <View style={styles.header}>
       {/* Logo and app name */}
@@ -32,7 +36,9 @@ export default function Header({ onSettingsPress }) {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",

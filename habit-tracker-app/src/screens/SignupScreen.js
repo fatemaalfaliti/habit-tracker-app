@@ -11,8 +11,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Logo from "../components/Logo";
 import { globalStyles, COLORS } from "../constants/theme";
 import { showAlert } from "../utils/showAlert";
+import { useTheme } from "../context/ThemeProvider";
 
 export default function SignupScreen({ navigation }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS, globalStyles } = useTheme();
+  const styles = makeStyles(COLORS);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -128,7 +132,9 @@ export default function SignupScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   scroll: {
     flexGrow: 1,
     justifyContent: "center",

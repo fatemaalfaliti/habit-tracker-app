@@ -9,6 +9,8 @@ import { DEFAULT_HABITS } from "../constants/habits";
 //   "users"            -> all registered accounts (Signup screen)
 //   "currentUser"      -> the logged-in user / session (Login screen)
 //   "habits_<email>"   -> each user's habits, completed days and favourites
+//   "theme"            -> light or dark mode (ThemeProvider)
+//   "notifications_<email>" -> notifications on / off (Settings screen)
 // ------------------------------------------------------------
 
 const keyFor = (email) => `habits_${email}`;
@@ -134,4 +136,75 @@ export const getStreak = (habit) => {
     day.setDate(day.getDate() - 1);
   }
   return streak;
+};
+
+// ---------------- Profile (Settings screen) ----------------
+
+// Updates the user's name and email everywhere they are saved:
+// the users list, the current session and the habits key.
+// Returns { ok: true, user } or { ok: false, message }.
+export const updateUserProfile = async (oldEmail, newUserName, newEmail) => {
+  try {
+    const email = newEmail.trim().toLowerCase();
+    const stored = await AsyncStorage.getItem("users");
+    const users = stored ? JSON.parse(stored) : [];
+
+    // The new email must not belong to another account
+    if (email !== oldEmail && users.some((u) => u.email === email)) {
+      return { ok: false, message: "This email is already used by another account." };
+    }
+
+    const current = users.find((u) => u.email === oldEmail);
+    if (!current) {
+      return { ok: false, message: "Account not found." };
+    }
+    const updatedUser = { ...current, userName: newUserName.trim(), email };
+
+    // 1. Save the updated users list
+    await AsyncStorage.setItem(
+      "users",
+      JSON.stringify(users.map((u) => (u.email === oldEmail ? updatedUser : u)))
+    );
+    // 2. Update the logged-in session
+    await saveCurrentUser(updatedUser);
+    // 3. If the email changed, move the habits and settings to the new key
+    if (email !== oldEmail) {
+      const habits = await AsyncStorage.getItem(keyFor(oldEmail));
+      if (habits) {
+        await AsyncStorage.setItem(keyFor(email), habits);
+        await AsyncStorage.removeItem(keyFor(oldEmail));
+      }
+      const notif = await AsyncStorage.getItem(`notifications_${oldEmail}`);
+      if (notif !== null) {
+        await AsyncStorage.setItem(`notifications_${email}`, notif);
+        await AsyncStorage.removeItem(`notifications_${oldEmail}`);
+      }
+    }
+    return { ok: true, user: updatedUser };
+  } catch (error) {
+    console.log("Error updating profile:", error);
+    return { ok: false, message: "Something went wrong. Please try again." };
+  }
+};
+
+// ---------------- Notification preference ----------------
+
+// Reads whether notifications are on for this user (on by default)
+export const getNotificationsEnabled = async (email) => {
+  try {
+    const value = await AsyncStorage.getItem(`notifications_${email}`);
+    return value === null ? true : value === "true";
+  } catch (error) {
+    console.log("Error reading notification setting:", error);
+    return true;
+  }
+};
+
+// Saves the notification on/off choice for this user
+export const saveNotificationsEnabled = async (email, enabled) => {
+  try {
+    await AsyncStorage.setItem(`notifications_${email}`, String(enabled));
+  } catch (error) {
+    console.log("Error saving notification setting:", error);
+  }
 };

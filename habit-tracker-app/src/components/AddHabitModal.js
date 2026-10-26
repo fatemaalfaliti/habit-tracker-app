@@ -11,12 +11,16 @@ import Icon from "./Icon";
 import { globalStyles, COLORS, FONTS } from "../constants/theme";
 import { CATEGORIES } from "../constants/habits";
 import { showAlert } from "../utils/showAlert";
+import { useTheme } from "../context/ThemeProvider";
 
 // ------------------------------------------------------------
 // Pop-up form for adding a new habit:
 // habit name, category and duration.
 // ------------------------------------------------------------
 export default function AddHabitModal({ visible, onClose, onAdd }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS, globalStyles } = useTheme();
+  const styles = makeStyles(COLORS);
   const [title, setTitle] = useState("");
   const [duration, setDuration] = useState("");
   const [category, setCategory] = useState("Health");
@@ -114,14 +118,16 @@ export default function AddHabitModal({ visible, onClose, onAdd }) {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.4)",
     justifyContent: "flex-end",
   },
   sheet: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,

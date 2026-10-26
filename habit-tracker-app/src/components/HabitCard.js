@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "./Icon";
 import { COLORS, FONTS } from "../constants/theme";
 import { CATEGORIES } from "../constants/habits";
+import { useTheme } from "../context/ThemeProvider";
 
 // ------------------------------------------------------------
 // One habit card: icon thumbnail, title, category tag, duration,
@@ -10,6 +11,9 @@ import { CATEGORIES } from "../constants/habits";
 // Tap the card to open details, long-press it to delete.
 // ------------------------------------------------------------
 export default function HabitCard({ habit, done, onPress, onToggle, onLongPress }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS } = useTheme();
+  const styles = makeStyles(COLORS);
   // Colours and icon for the habit's category
   const category = CATEGORIES[habit.category] || CATEGORIES.Health;
 
@@ -48,19 +52,21 @@ export default function HabitCard({ habit, done, onPress, onToggle, onLongPress 
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   card: {
     flexDirection: "row",
     alignItems: "center",
     padding: 12,
     borderWidth: 1.5,
-    borderColor: "#E5E7EB",
+    borderColor: COLORS.divider,
     borderRadius: 14,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     marginBottom: 10,
   },
   cardDone: {
-    backgroundColor: "#F9FAFB",
+    backgroundColor: COLORS.cardMuted,
   },
   thumb: {
     width: 56,
@@ -106,7 +112,7 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 16,
     borderWidth: 2,
-    borderColor: "#9CA3AF",
+    borderColor: COLORS.textMuted,
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 8,

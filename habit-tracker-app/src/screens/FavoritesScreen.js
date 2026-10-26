@@ -16,6 +16,7 @@ import {
   getFavoriteHabits,
   removeFavorite,
 } from "../utils/habitStorage";
+import { useTheme } from "../context/ThemeProvider";
 
 // ------------------------------------------------------------
 // My Favorites screen.
@@ -23,6 +24,9 @@ import {
 // every time the screen is opened, and lets the user remove them.
 // ------------------------------------------------------------
 export default function FavoritesScreen({ navigation }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS } = useTheme();
+  const styles = makeStyles(COLORS);
   // ---------------- State ----------------
   const [user, setUser] = useState(null);
   const [favorites, setFavorites] = useState([]);
@@ -139,7 +143,9 @@ export default function FavoritesScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -198,7 +204,7 @@ const styles = StyleSheet.create({
   },
   card: {
     borderWidth: 1.5,
-    borderColor: "#E5E7EB",
+    borderColor: COLORS.divider,
     borderRadius: 16,
     padding: 12,
     marginBottom: 12,

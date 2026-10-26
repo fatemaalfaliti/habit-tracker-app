@@ -12,6 +12,7 @@ import Icon from "../components/Icon";
 import { COLORS, FONTS } from "../constants/theme";
 import { getCurrentUser } from "../utils/habitStorage";
 import { showAlert } from "../utils/showAlert";
+import { useTheme } from "../context/ThemeProvider";
 
 // ------------------------------------------------------------
 // Settings Menu screen (opened from the settings icon on the Home screen).
@@ -28,7 +29,7 @@ const MENU_OPTIONS = [
     title: "Settings",
     subtitle: "Profile, theme and preferences",
     icon: "options-outline",
-    screen: null, // added in the "Settings Screen" lab
+    screen: "Settings",
   },
   {
     id: "favorites",
@@ -61,6 +62,9 @@ const MENU_OPTIONS = [
 ];
 
 export default function MenuScreen({ navigation }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS } = useTheme();
+  const styles = makeStyles(COLORS);
   // ---------------- State: logged-in user details ----------------
   const [user, setUser] = useState(null);
 
@@ -156,7 +160,9 @@ export default function MenuScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -195,7 +201,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: COLORS.primarySoft,
     borderWidth: 1.5,
-    borderColor: "#99F6E4",
+    borderColor: COLORS.accentBorder,
   },
   avatar: {
     width: 52,
@@ -237,9 +243,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderWidth: 1.5,
-    borderColor: "#E5E7EB",
+    borderColor: COLORS.divider,
     borderRadius: 16,
-    backgroundColor: "#F9FAFB",
+    backgroundColor: COLORS.cardMuted,
     marginBottom: 12,
   },
   menuIcon: {

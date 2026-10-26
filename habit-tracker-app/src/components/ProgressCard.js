@@ -1,12 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { COLORS, FONTS } from "../constants/theme";
+import { useTheme } from "../context/ThemeProvider";
 
 // ------------------------------------------------------------
 // Today's Progress card: shows how many habits are done today
 // with a progress bar. It updates when a habit is marked as done.
 // ------------------------------------------------------------
 export default function ProgressCard({ completed, total }) {
+  // Active theme colours and styles (light or dark mode)
+  const { colors: COLORS } = useTheme();
+  const styles = makeStyles(COLORS);
   // Percentage of completed habits (0 when there are no habits)
   const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
 
@@ -28,10 +32,12 @@ export default function ProgressCard({ completed, total }) {
   );
 }
 
-const styles = StyleSheet.create({
+// Styles are built from the active theme colours (light or dark)
+const makeStyles = (COLORS) =>
+  StyleSheet.create({
   card: {
     borderWidth: 1.5,
-    borderColor: "#E5E7EB",
+    borderColor: COLORS.divider,
     borderRadius: 16,
     padding: 16,
     marginBottom: 20,
@@ -54,7 +60,7 @@ const styles = StyleSheet.create({
   track: {
     height: 10,
     borderRadius: 5,
-    backgroundColor: "#E5E7EB",
+    backgroundColor: COLORS.divider,
     overflow: "hidden",
   },
   fill: {
