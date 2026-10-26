@@ -6,14 +6,14 @@ import { globalStyles, COLORS, FONTS } from "../constants/theme";
 import { getCurrentUser } from "../utils/habitStorage";
 
 // ------------------------------------------------------------
-// Temporary Menu screen (opened from the settings icon).
-// The full settings menu will be built in Module 4.
-// For now it greets the user and lets them log out.
+// Settings menu (opened from the settings icon on the Home screen).
+// Greets the user, links to other screens, and lets them log out.
+// More options (Settings, Daily Reminders, Reports) come in Module 4.
 // ------------------------------------------------------------
 export default function MenuScreen({ navigation }) {
   const [userName, setUserName] = useState("");
 
-  // Load the logged-in user's name
+  // Load the logged-in user's name from local storage
   useEffect(() => {
     getCurrentUser().then((user) => {
       if (user) setUserName(user.userName);
@@ -40,6 +40,20 @@ export default function MenuScreen({ navigation }) {
       <Text style={globalStyles.title}>Hello, {userName}!</Text>
       <Text style={globalStyles.subtitle}>Would you like to change any settings?</Text>
 
+      {/* Menu options */}
+      <TouchableOpacity
+        style={styles.menuItem}
+        onPress={() => navigation.navigate("Favorites")}
+      >
+        <View style={styles.menuIcon}>
+          <Icon name="heart-outline" size={20} color={COLORS.primaryDark} />
+        </View>
+        <Text style={styles.menuText}>My Favorites</Text>
+        <Text style={styles.chevron}>›</Text>
+      </TouchableOpacity>
+
+      <View style={styles.spacer} />
+
       {/* Logout button */}
       <TouchableOpacity style={styles.logout} onPress={handleLogout}>
         <Icon name="log-out-outline" size={20} color={COLORS.error} />
@@ -63,6 +77,39 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 24,
+  },
+  menuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 68,
+    paddingHorizontal: 16,
+    borderWidth: 1.5,
+    borderColor: "#E5E7EB",
+    borderRadius: 16,
+    backgroundColor: "#F9FAFB",
+    marginBottom: 12,
+  },
+  menuIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: COLORS.primaryLight,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 14,
+  },
+  menuText: {
+    flex: 1,
+    fontSize: 15,
+    fontWeight: FONTS.semibold,
+    color: COLORS.text,
+  },
+  chevron: {
+    fontSize: 24,
+    color: COLORS.textMuted,
+  },
+  spacer: {
+    flex: 1,
   },
   logout: {
     flexDirection: "row",

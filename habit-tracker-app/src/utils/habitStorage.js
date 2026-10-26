@@ -2,8 +2,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DEFAULT_HABITS } from "../constants/habits";
 
 // ------------------------------------------------------------
-// Helper functions for reading and saving habits in AsyncStorage.
-// Every user has their own list, saved under "habits_<email>".
+// Local storage (persistence) for the whole app, using AsyncStorage.
+// On the web, AsyncStorage saves into the browser's Local Storage.
+//
+// Keys saved in local storage:
+//   "users"            -> all registered accounts (Signup screen)
+//   "currentUser"      -> the logged-in user / session (Login screen)
+//   "habits_<email>"   -> each user's habits, completed days and favourites
 // ------------------------------------------------------------
 
 const keyFor = (email) => `habits_${email}`;
@@ -14,25 +19,71 @@ export const getDateKey = (date = new Date()) => {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 };
 
+// ---------------- User profile / session ----------------
+
 // Reads the logged-in user saved by the Login screen
 export const getCurrentUser = async () => {
-  const stored = await AsyncStorage.getItem("currentUser");
-  return stored ? JSON.parse(stored) : null;
+  try {
+    const stored = await AsyncStorage.getItem("currentUser");
+    return stored ? JSON.parse(stored) : null;
+  } catch (error) {
+    console.log("Error reading current user:", error);
+    return null;
+  }
 };
+
+// Saves the logged-in user (keeps the user logged in between sessions)
+export const saveCurrentUser = async (user) => {
+  try {
+    await AsyncStorage.setItem("currentUser", JSON.stringify(user));
+  } catch (error) {
+    console.log("Error saving current user:", error);
+  }
+};
+
+// ---------------- Habits (user actions) ----------------
 
 // Loads the user's habits. The first time, it saves the default habits.
 export const loadHabits = async (email) => {
-  const stored = await AsyncStorage.getItem(keyFor(email));
-  if (stored) {
-    return JSON.parse(stored);
+  try {
+    const stored = await AsyncStorage.getItem(keyFor(email));
+    if (stored) {
+      return JSON.parse(stored);
+    }
+    await AsyncStorage.setItem(keyFor(email), JSON.stringify(DEFAULT_HABITS));
+    return DEFAULT_HABITS;
+  } catch (error) {
+    console.log("Error loading habits:", error);
+    return [];
   }
-  await AsyncStorage.setItem(keyFor(email), JSON.stringify(DEFAULT_HABITS));
-  return DEFAULT_HABITS;
 };
 
 // Saves the full list of habits for the user
 export const saveHabits = async (email, habits) => {
-  await AsyncStorage.setItem(keyFor(email), JSON.stringify(habits));
+  try {
+    await AsyncStorage.setItem(keyFor(email), JSON.stringify(habits));
+  } catch (error) {
+    console.log("Error saving habits:", error);
+  }
+};
+
+// ---------------- Favourites ----------------
+
+// Returns only the habits the user added to favourites
+export const getFavoriteHabits = async (email) => {
+  const habits = await loadHabits(email);
+  return habits.filter((h) => h.favorite);
+};
+
+// Removes a habit from favourites and saves the change.
+// Returns the updated list of favourite habits.
+export const removeFavorite = async (email, habitId) => {
+  const habits = await loadHabits(email);
+  const updated = habits.map((h) =>
+    h.id === habitId ? { ...h, favorite: false } : h
+  );
+  await saveHabits(email, updated);
+  return updated.filter((h) => h.favorite);
 };
 
 // True if the habit was marked as done today
