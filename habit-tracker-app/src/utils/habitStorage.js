@@ -102,6 +102,25 @@ export const toggleDoneToday = (habit) => {
   };
 };
 
+// Longest run of consecutive completed days for one habit (used in Reports)
+export const getBestStreak = (habit) => {
+  const days = [...habit.completedDates].sort();
+  let best = 0;
+  let current = 0;
+  let previous = null;
+  days.forEach((key) => {
+    const date = new Date(`${key}T00:00:00`);
+    if (previous && (date - previous) / 86400000 === 1) {
+      current += 1;
+    } else {
+      current = 1;
+    }
+    best = Math.max(best, current);
+    previous = date;
+  });
+  return best;
+};
+
 // Counts how many days in a row the habit was completed
 export const getStreak = (habit) => {
   let streak = 0;

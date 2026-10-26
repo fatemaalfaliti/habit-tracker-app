@@ -19,6 +19,13 @@ const SYMBOLS = {
   "heart-outline": "♡",
   "sparkles-outline": "✦",
   "log-out-outline": "↩",
+  "chevron-forward": "›",
+  // Menu icons (emoji)
+  "options-outline": "⚙️",
+  "alarm-outline": "⏰",
+  "bar-chart-outline": "📊",
+  "information-circle-outline": "ℹ️",
+  "person-outline": "👤",
   // Habit icons (colourful emoji)
   flame: "🔥",
   "walk-outline": "🚶",

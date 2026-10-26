@@ -7,6 +7,8 @@ import HomeScreen from "./src/screens/HomeScreen";
 import DetailScreen from "./src/screens/DetailScreen";
 import MenuScreen from "./src/screens/MenuScreen";
 import FavoritesScreen from "./src/screens/FavoritesScreen";
+import ReportsScreen from "./src/screens/ReportsScreen";
+import AboutScreen from "./src/screens/AboutScreen";
 
 // ------------------------------------------------------------
 // Navigation: all the app screens are registered here.
@@ -27,6 +29,8 @@ export default function App() {
         <Stack.Screen name="Detail" component={DetailScreen} />
         <Stack.Screen name="Menu" component={MenuScreen} />
         <Stack.Screen name="Favorites" component={FavoritesScreen} />
+        <Stack.Screen name="Reports" component={ReportsScreen} />
+        <Stack.Screen name="About" component={AboutScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
