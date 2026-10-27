@@ -129,6 +129,19 @@ export default function RemindersScreen({ navigation }) {
           "Please allow notifications in your browser to receive reminders."
         );
       }
+      // Turning notifications back on schedules the future reminders again
+      const rescheduled = [];
+      for (const reminder of reminders) {
+        if (new Date(reminder.triggerDate) <= new Date()) continue; // skip past ones
+        const notificationId = await scheduleNotificationAt(
+          "HabitTracker Reminder",
+          reminderMessage(reminder.habit),
+          new Date(reminder.triggerDate)
+        );
+        rescheduled.push({ ...reminder, notificationId });
+      }
+      setReminders(rescheduled);
+      await saveReminders(user.email, rescheduled);
     } else {
       // Turning notifications off cancels all scheduled reminders
       for (const reminder of reminders) {
