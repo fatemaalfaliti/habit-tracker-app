@@ -10,6 +10,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import DetailScreen from "./src/screens/DetailScreen";
 import MenuScreen from "./src/screens/MenuScreen";
 import SettingsScreen from "./src/screens/SettingsScreen";
+import RemindersScreen from "./src/screens/RemindersScreen";
 import FavoritesScreen from "./src/screens/FavoritesScreen";
 import ReportsScreen from "./src/screens/ReportsScreen";
 import AboutScreen from "./src/screens/AboutScreen";
@@ -60,6 +61,7 @@ function AppNavigator() {
         <Stack.Screen name="Detail" component={DetailScreen} />
         <Stack.Screen name="Menu" component={MenuScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
+        <Stack.Screen name="Reminders" component={RemindersScreen} />
         <Stack.Screen name="Favorites" component={FavoritesScreen} />
         <Stack.Screen name="Reports" component={ReportsScreen} />
         <Stack.Screen name="About" component={AboutScreen} />

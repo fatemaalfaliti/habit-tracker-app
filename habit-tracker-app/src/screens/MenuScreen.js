@@ -43,7 +43,7 @@ const MENU_OPTIONS = [
     title: "Daily Reminders",
     subtitle: "Set reminder times",
     icon: "alarm-outline",
-    screen: null, // added in the "Notifications" lab
+    screen: "Reminders",
   },
   {
     id: "reports",

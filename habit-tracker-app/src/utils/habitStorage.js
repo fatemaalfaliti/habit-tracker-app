@@ -11,6 +11,7 @@ import { DEFAULT_HABITS } from "../constants/habits";
 //   "habits_<email>"   -> each user's habits, completed days and favourites
 //   "theme"            -> light or dark mode (ThemeProvider)
 //   "notifications_<email>" -> notifications on / off (Settings screen)
+//   "reminders_<email>"     -> scheduled reminders (Daily Reminders screen)
 // ------------------------------------------------------------
 
 const keyFor = (email) => `habits_${email}`;
@@ -174,10 +175,12 @@ export const updateUserProfile = async (oldEmail, newUserName, newEmail) => {
         await AsyncStorage.setItem(keyFor(email), habits);
         await AsyncStorage.removeItem(keyFor(oldEmail));
       }
-      const notif = await AsyncStorage.getItem(`notifications_${oldEmail}`);
-      if (notif !== null) {
-        await AsyncStorage.setItem(`notifications_${email}`, notif);
-        await AsyncStorage.removeItem(`notifications_${oldEmail}`);
+      for (const prefix of ["notifications_", "reminders_"]) {
+        const value = await AsyncStorage.getItem(`${prefix}${oldEmail}`);
+        if (value !== null) {
+          await AsyncStorage.setItem(`${prefix}${email}`, value);
+          await AsyncStorage.removeItem(`${prefix}${oldEmail}`);
+        }
       }
     }
     return { ok: true, user: updatedUser };
@@ -206,5 +209,27 @@ export const saveNotificationsEnabled = async (email, enabled) => {
     await AsyncStorage.setItem(`notifications_${email}`, String(enabled));
   } catch (error) {
     console.log("Error saving notification setting:", error);
+  }
+};
+
+// ---------------- Reminders (Daily Reminders screen) ----------------
+
+// Reads the user's saved reminders
+export const getReminders = async (email) => {
+  try {
+    const stored = await AsyncStorage.getItem(`reminders_${email}`);
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.log("Error reading reminders:", error);
+    return [];
+  }
+};
+
+// Saves the user's reminders
+export const saveReminders = async (email, reminders) => {
+  try {
+    await AsyncStorage.setItem(`reminders_${email}`, JSON.stringify(reminders));
+  } catch (error) {
+    console.log("Error saving reminders:", error);
   }
 };
